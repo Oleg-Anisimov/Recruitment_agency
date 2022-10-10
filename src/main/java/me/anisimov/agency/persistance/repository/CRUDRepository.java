@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CRUDRepository<T>{
     void create(T data) throws SQLException;
-    void update(long id,T data);
+    void update(T data) throws SQLException;
     void delete(long id);
     void delete(T data);
     T getById(long id);

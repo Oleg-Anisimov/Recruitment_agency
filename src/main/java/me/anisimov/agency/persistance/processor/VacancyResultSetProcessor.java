@@ -17,6 +17,8 @@ public class VacancyResultSetProcessor implements ResultSetProcessor<Vacancy> {
         vacancy.setId(resultSet.getLong("id"));
         vacancy.setPosition(resultSet.getString("position"));
         vacancy.setSalary(resultSet.getInt("salary"));
+        vacancy.setDescription(resultSet.getString("description"));
+        vacancy.setRequiredExperience(resultSet.getByte("required_experience"));
         vacancy.setSkills(vacancySkillsResolver.resolve(vacancy));
         return vacancy;
     }

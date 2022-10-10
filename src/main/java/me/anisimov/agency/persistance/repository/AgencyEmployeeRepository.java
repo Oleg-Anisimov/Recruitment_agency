@@ -37,7 +37,7 @@ public class AgencyEmployeeRepository implements CRUDRepository<AgencyEmployee> 
     }
 
     @Override
-    public void update(long id, AgencyEmployee data) {
+    public void update( AgencyEmployee data) {
 
     }
 

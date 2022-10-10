@@ -12,6 +12,7 @@ import me.anisimov.agency.persistance.repository.AgencyEmployeeRepository;
 import me.anisimov.agency.persistance.repository.CandidateRepository;
 import me.anisimov.agency.persistance.repository.VacancyRepository;
 //import me.anisimov.agency.util.PersistenceUtil;
+import me.anisimov.agency.util.DataBaseInitializer;
 import me.anisimov.agency.util.PersistenceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -20,6 +21,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 @SpringBootApplication
@@ -35,12 +37,15 @@ public class AgencyApplication implements CommandLineRunner {
     AgencyEmployeeRepository agencyEmployeeRepository;
     @Autowired
     PersistenceUtil persistenceUtil;
+    @Autowired
+    Optional<DataBaseInitializer> dataBaseInitializer;
     public static void main(String[] args) {
         SpringApplication.run(AgencyApplication.class, args);
     }
 
     @Override
     public void run(String... args) throws Exception {
+        dataBaseInitializer.ifPresent(dataBaseInitializer -> { dataBaseInitializer.init();} );
 
 //        String s = persistenceUtil.buildSqlInsert(new Vacancy(LocalDateTime.now(), LocalDateTime.now(), (byte) 3, 300, "ytryrtyrt", "javaDeveloper"));
 //        dao.execute(s, (rs) -> {
@@ -56,11 +61,9 @@ public class AgencyApplication implements CommandLineRunner {
 //
 //        String s = persistenceUtil.convertToSql(new Vacancy());
 //        log.info(s);
-
-       List vacancies = vacancyRepository.getAll();
-                vacancies.forEach(o -> {
-            log.info(((Vacancy) o).toString());
-        });
+        Vacancy vacancy = vacancyRepository.getById(4l);
+        vacancy.setSalary(200);
+        vacancyRepository.update(vacancy);
 
 //        List candidateExecute = dao.execute("Select * from candidate", new CandidateResultSetProcessor());
 //        candidateExecute.forEach(o -> {

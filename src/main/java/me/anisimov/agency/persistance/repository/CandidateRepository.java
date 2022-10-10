@@ -38,7 +38,7 @@ public class CandidateRepository implements CRUDRepository<Candidate> {
     }
 
     @Override
-    public void update(long id, Candidate data) {
+    public void update( Candidate data) {
 
     }
 
