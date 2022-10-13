@@ -16,6 +16,8 @@ public class CandidateRepository implements CRUDRepository<Candidate> {
     @Autowired
     private DAO dao;
 
+    @Autowired
+    private CandidateResultSetProcessor candidateResultSetProcessor;
     @Override
     public void create(Candidate data) throws SQLException {
         String sql = "Insert into candidate(id,name,surname,middlename,citizen_ship,required_experience,work_places,key_skills,desired_salary,desired_career,basic_description) " +
@@ -38,8 +40,22 @@ public class CandidateRepository implements CRUDRepository<Candidate> {
     }
 
     @Override
-    public void update( Candidate data) {
-
+    public void update(Candidate data) throws SQLException {
+        String sql = "Update candidate set name=?,surname=?,middlename=?,citizen_ship=?,required_experience=?,work_places=?,key_skills=?,desired_salary=?,basic_description=? where id=" + data.getId();
+        PreparedStatement preparedStatement = dao.getConnection().prepareStatement(sql);
+        preparedStatement.setString(1, data.getName());
+        preparedStatement.setString(2, data.getSurname());
+        preparedStatement.setString(3, data.getMiddleName());
+        preparedStatement.setString(4, data.getCitizenShip());
+        preparedStatement.setInt(5, data.getRequiredExperience());
+        preparedStatement.setString(6, String.valueOf(data.getWorkPlaces()));
+        preparedStatement.setArray(7, (Array) data.getKeySkills());
+        preparedStatement.setInt(8, data.getDesiredSalary());
+        preparedStatement.setString(9, data.getDesiredCareer());
+        preparedStatement.setString(10, data.getBasicDescription());
+        dao.execute(preparedStatement.toString(), (rs) -> {
+            return null;
+        });
     }
 
     @Override
@@ -61,7 +77,7 @@ public class CandidateRepository implements CRUDRepository<Candidate> {
     @Override
     public Candidate getById(long id) {
         String sql = "Select from candidate where id=" + id;
-        Candidate candidate = (Candidate) dao.execute(sql, new CandidateResultSetProcessor()).get(0);
+        Candidate candidate = (Candidate) dao.execute(sql, candidateResultSetProcessor).get(0);
         return candidate;
     }
 
@@ -76,14 +92,14 @@ public class CandidateRepository implements CRUDRepository<Candidate> {
             stringBuilder.append(candidateId);
         }
         stringBuilder.append(")");
-        List<Candidate> candidates = dao.execute(stringBuilder.toString(), new CandidateResultSetProcessor());
+        List<Candidate> candidates = dao.execute(stringBuilder.toString(), candidateResultSetProcessor);
         return candidates;
     }
 
     @Override
     public List<Candidate> getAll() {
         String sql = "Select * from candidate";
-        List<Candidate> candidates = dao.execute(sql, new CandidateResultSetProcessor());
+        List<Candidate> candidates = dao.execute(sql,candidateResultSetProcessor);
         return candidates;
     }
 }

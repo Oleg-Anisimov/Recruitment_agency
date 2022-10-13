@@ -16,6 +16,8 @@ public class AgencyEmployeeRepository implements CRUDRepository<AgencyEmployee> 
     private static final String COMMA = ",";
     @Autowired
     private DAO dao;
+    @Autowired
+    private AgencyEmployeeResultSetProcessor agencyEmployeeResultSetProcessor;
 
     @Override
     public void create(AgencyEmployee data) throws SQLException {
@@ -37,8 +39,20 @@ public class AgencyEmployeeRepository implements CRUDRepository<AgencyEmployee> 
     }
 
     @Override
-    public void update( AgencyEmployee data) {
-
+    public void update( AgencyEmployee data) throws SQLException {
+        String sql = "Update employee set name=?,surname=?,middlename=?,citizen_ship=?,work_experience=?,birth_date=?,residence_place=?,phone_number=? where id="+data.getId();
+        PreparedStatement preparedStatement = dao.getConnection().prepareStatement(sql);
+        preparedStatement.setString(1, data.getName());
+        preparedStatement.setString(2, data.getSurname());
+        preparedStatement.setString(3, data.getMiddleName());
+        preparedStatement.setString(4, data.getCitizenShip());
+        preparedStatement.setInt(5, data.getRequiredExperience());
+        preparedStatement.setString(6, String.valueOf(data.getBirthDate()));
+        preparedStatement.setString(7, data.getResidencePlace());
+        preparedStatement.setString(8, data.getPhoneNumber());
+        dao.execute(preparedStatement.toString(), (rs) -> {
+            return null;
+        });
     }
 
     @Override
@@ -60,7 +74,7 @@ public class AgencyEmployeeRepository implements CRUDRepository<AgencyEmployee> 
     @Override
     public AgencyEmployee getById(long id) {
         String sql = "Select from employee where id=" + id;
-        AgencyEmployee agencyEmployee = (AgencyEmployee) dao.execute(sql, new AgencyEmployeeResultSetProcessor()).get(0);
+        AgencyEmployee agencyEmployee = (AgencyEmployee) dao.execute(sql, agencyEmployeeResultSetProcessor).get(0);
         return agencyEmployee;
     }
 
@@ -75,14 +89,14 @@ public class AgencyEmployeeRepository implements CRUDRepository<AgencyEmployee> 
             stringBuilder.append(agencyEmployeeId);
         }
         stringBuilder.append(")");
-        List<AgencyEmployee> agencyEmployees = dao.execute(stringBuilder.toString(), new AgencyEmployeeResultSetProcessor());
+        List<AgencyEmployee> agencyEmployees = dao.execute(stringBuilder.toString(), agencyEmployeeResultSetProcessor);
         return agencyEmployees;
     }
 
     @Override
     public List<AgencyEmployee> getAll() {
         String sql = "Select * from employee";
-        List<AgencyEmployee> agencyEmployees = dao.execute(sql, new AgencyEmployeeResultSetProcessor());
+        List<AgencyEmployee> agencyEmployees = dao.execute(sql,agencyEmployeeResultSetProcessor);
         return agencyEmployees;
     }
 }
