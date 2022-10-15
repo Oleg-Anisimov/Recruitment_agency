@@ -28,7 +28,7 @@ public class CandidateRepository implements CRUDRepository<Candidate> {
         preparedStatement.setString(3, data.getSurname());
         preparedStatement.setString(4, data.getMiddleName());
         preparedStatement.setString(5, data.getCitizenShip());
-        preparedStatement.setInt(6, data.getRequiredExperience());
+        preparedStatement.setByte(6, data.getRequiredExperience());
         preparedStatement.setString(7, String.valueOf(data.getWorkPlaces()));
         preparedStatement.setArray(8, (Array) data.getKeySkills());
         preparedStatement.setInt(9, data.getDesiredSalary());
@@ -47,7 +47,7 @@ public class CandidateRepository implements CRUDRepository<Candidate> {
         preparedStatement.setString(2, data.getSurname());
         preparedStatement.setString(3, data.getMiddleName());
         preparedStatement.setString(4, data.getCitizenShip());
-        preparedStatement.setInt(5, data.getRequiredExperience());
+        preparedStatement.setByte(5, data.getRequiredExperience());
         preparedStatement.setString(6, String.valueOf(data.getWorkPlaces()));
         preparedStatement.setArray(7, (Array) data.getKeySkills());
         preparedStatement.setInt(8, data.getDesiredSalary());
