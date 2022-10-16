@@ -5,9 +5,11 @@ import me.anisimov.agency.persistance.DAO;
 import me.anisimov.agency.persistance.processor.ResultSetProcessor;
 import me.anisimov.agency.persistance.processor.VacancyResultSetProcessor;
 import me.anisimov.agency.persistance.resolver.VacancySkillsResolver;
+import me.anisimov.agency.util.PersistenceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,31 +24,26 @@ public class VacancyRepository implements CRUDRepository<Vacancy> {
     private DAO dao;
     @Autowired
     private VacancyResultSetProcessor vacancyResultSetProcessor;
+    @Autowired
+    PersistenceUtil persistenceUtil;
 
     @Override
-    public void create(Vacancy data) throws SQLException {
-        String sql = "Insert into vacancy (id,created,updated,required_experience,salary,description,position) Values (?,?,?,?,?,?,?)";
-        PreparedStatement preparedStatement = dao.getConnection().prepareStatement(sql);
-        preparedStatement.setLong(1,data.getId());
-        preparedStatement.setString(2, String.valueOf(data.getCreated()));
-        preparedStatement.setString(3, String.valueOf(data.getUpdated()));
-        preparedStatement.setByte(4,data.getRequiredExperience());
-        preparedStatement.setInt(5, data.getSalary());
-        preparedStatement.setString(6, data.getDescription());
-        preparedStatement.setString(7, data.getPosition());
-        dao.execute(preparedStatement.toString(), (rs) -> {
+    public void create(Vacancy data) throws SQLException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+        String sql = persistenceUtil.buildSqlInsert(data);
+        dao.execute(sql, (rs) -> {
             return null;
         });
     }
 
     @Override
     public void update(Vacancy data) throws SQLException {
-        String sql = "Update vacancy set salary=?,required_experience=?,description=?,position=? where id="+data.getId();
+        String sql = "Update vacancy set salary=?,required_experience=?,description=?,position=?,employment_type=? where id="+data.getId();
         PreparedStatement preparedStatement = dao.getConnection().prepareStatement(sql);
         preparedStatement.setInt(1, data.getSalary());
         preparedStatement.setByte(2,data.getRequiredExperience());
         preparedStatement.setString(3, data.getDescription());
         preparedStatement.setString(4, data.getPosition());
+        preparedStatement.setString(8, String.valueOf(data.getEmploymentType()));
         dao.execute(preparedStatement.toString(), (rs) -> {
             return null;
         });

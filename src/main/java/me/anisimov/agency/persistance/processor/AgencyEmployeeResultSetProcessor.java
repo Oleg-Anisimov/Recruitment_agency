@@ -1,12 +1,13 @@
 package me.anisimov.agency.persistance.processor;
 
 import me.anisimov.agency.domain.AgencyEmployee;
+import org.springframework.stereotype.Component;
 
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-
+@Component
 public class AgencyEmployeeResultSetProcessor implements ResultSetProcessor<AgencyEmployee>{
     @Override
     public AgencyEmployee process(ResultSet resultSet) throws SQLException {

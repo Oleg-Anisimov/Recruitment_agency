@@ -42,12 +42,12 @@ public class PersistenceUtil {
             if (field.isAnnotationPresent(Column.class)) {
                 Column annotation = field.getAnnotation(Column.class);
                 columnName = annotation.name();
+                String fieldName = field.getName();
+                String accessorMethodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+                Method method = entityClass.getDeclaredMethod(accessorMethodName);
+                Object invokeResult = method.invoke(object);
+                params.put(columnName, invokeResult);
             }
-            String fieldName = field.getName();
-            String accessorMethodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-            Method method = entityClass.getDeclaredMethod(accessorMethodName);
-            Object invokeResult = method.invoke(object);
-            params.put(columnName, invokeResult);
         }
         for (String paramName : params.keySet()) {
             Object paramValue = params.get(paramName);

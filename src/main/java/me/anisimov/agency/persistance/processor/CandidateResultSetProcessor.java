@@ -3,10 +3,11 @@ package me.anisimov.agency.persistance.processor;
 import me.anisimov.agency.domain.Candidate;
 import me.anisimov.agency.persistance.resolver.CandidateSkillsResolver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+@Component
 public class CandidateResultSetProcessor implements ResultSetProcessor<Candidate> {
     @Autowired
     CandidateSkillsResolver candidateSkillsResolver;

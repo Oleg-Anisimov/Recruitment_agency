@@ -34,11 +34,12 @@ public class Vacancy {
     private List<Skills> skills = new ArrayList<>();
     @Column(name = "salary")
     private Integer salary;
-//    private EmploymentType employmentType;
+    @Column(name="employment_type")
+    private EmploymentType employmentType;
     @Column(name = "description")
     private String description;
 
-    public Vacancy(long id, LocalDateTime  created, LocalDateTime updated, byte requiredExperience, int salary, String description, String position) {
+    public Vacancy(long id, LocalDateTime  created, LocalDateTime updated, byte requiredExperience, int salary, String description, String position,EmploymentType employmentType) {
         this.id = id;
         this.created = created;
         this.updated = updated;
@@ -46,9 +47,11 @@ public class Vacancy {
         this.description=description;
         this.position = position;
         this.salary = salary;
+        this.employmentType =employmentType;
     }
 
-    public Vacancy(LocalDateTime created, LocalDateTime updated, byte requiredExperience, int salary, String description, String position) {
+    public Vacancy(LocalDateTime created, LocalDateTime updated, byte requiredExperience, int salary, String description, String position,EmploymentType employmentType) {
+        this.employmentType =employmentType;
         this.created = created;
         this.updated = updated;
         this.requiredExperience =requiredExperience;

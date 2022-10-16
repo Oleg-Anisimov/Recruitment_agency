@@ -1,5 +1,6 @@
 package me.anisimov.agency.persistance.processor;
 
+import me.anisimov.agency.domain.EmploymentType;
 import me.anisimov.agency.domain.Vacancy;
 import me.anisimov.agency.persistance.resolver.VacancySkillsResolver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ public class VacancyResultSetProcessor implements ResultSetProcessor<Vacancy> {
         vacancy.setSalary(resultSet.getInt("salary"));
         vacancy.setDescription(resultSet.getString("description"));
         vacancy.setRequiredExperience(resultSet.getByte("required_experience"));
+        vacancy.setEmploymentType(EmploymentType.valueOf(resultSet.getString("employment_type")));
         vacancy.setSkills(vacancySkillsResolver.resolve(vacancy));
         return vacancy;
     }

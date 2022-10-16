@@ -1,0 +1,101 @@
+[
+  {
+    "created": "2022-10-16T10:38:48.7386597",
+    "updated": "2022-10-16T10:38:48.7386597",
+    "position": "javaDeveloper",
+    "requiredExperience": 0,
+    "skills": [],
+    "salary": 30000,
+    "employmentType": "FULL_TIME",
+    "description": null
+  },
+  {
+    "created": "2022-10-16T10:38:48.7408984",
+    "updated": "2022-10-16T10:38:48.7408984",
+    "position": "javaDeveloper",
+    "requiredExperience": 0,
+    "skills": [],
+    "salary": 30000,
+    "employmentType": "FULL_TIME",
+    "description": null
+  },
+  {
+    "created": "2022-10-16T10:38:48.7430663",
+    "updated": "2022-10-16T10:38:48.7430663",
+    "position": "javaDeveloper",
+    "requiredExperience": 3,
+    "skills": [],
+    "salary": 30000,
+    "employmentType": "FULL_TIME",
+    "description": "ytryrtyrt"
+  },
+  {
+    "created": "2022-10-16T10:38:48.7447106",
+    "updated": "2022-10-16T10:38:48.7447106",
+    "position": "javaDeveloper",
+    "requiredExperience": 3,
+    "skills": [
+      {
+        "id": 1,
+        "name": "java"
+      },
+      {
+        "id": 2,
+        "name": "Spring"
+      }
+    ],
+    "salary": 200,
+    "employmentType": "FULL_TIME",
+    "description": "ytryrtyrt"
+  },
+  {
+    "created": "2022-10-16T10:38:48.7569236",
+    "updated": "2022-10-16T10:38:48.7575493",
+    "position": "javaDeveloper",
+    "requiredExperience": 3,
+    "skills": [],
+    "salary": 300,
+    "employmentType": "FULL_TIME",
+    "description": "ytryrtyrt"
+  },
+  {
+    "created": "2022-10-16T10:38:48.7598164",
+    "updated": "2022-10-16T10:38:48.7598164",
+    "position": "javaDeveloper",
+    "requiredExperience": 3,
+    "skills": [],
+    "salary": 300,
+    "employmentType": "FULL_TIME",
+    "description": "ytryrtyrt"
+  },
+  {
+    "created": "2022-10-16T10:38:48.7619869",
+    "updated": "2022-10-16T10:38:48.7620047",
+    "position": "javaDeveloper",
+    "requiredExperience": 3,
+    "skills": [],
+    "salary": 300,
+    "employmentType": "FULL_TIME",
+    "description": "ytryrtyrt"
+  },
+  {
+    "created": "2022-10-16T10:38:48.7658942",
+    "updated": "2022-10-16T10:38:48.7658942",
+    "position": "javaDeveloper",
+    "requiredExperience": 3,
+    "skills": [],
+    "salary": 30000,
+    "employmentType": "FULL_TIME",
+    "description": "ytryrtyrt"
+  },
+  {
+    "created": "2022-10-16T10:38:48.7675837",
+    "updated": "2022-10-16T10:38:48.7675837",
+    "position": "javaDeveloper",
+    "requiredExperience": 3,
+    "skills": [],
+    "salary": 30000,
+    "employmentType": "FULL_TIME",
+    "description": "ytryrtyrt"
+  }
+]

@@ -4,10 +4,11 @@ import me.anisimov.agency.domain.Candidate;
 import me.anisimov.agency.domain.Skills;
 import me.anisimov.agency.persistance.DAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
-
+@Component
 public class CandidateSkillsResolver implements Resolver<Candidate, Skills> {
    @Autowired
     DAO dao;
