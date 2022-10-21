@@ -2,6 +2,7 @@ package me.anisimov.agency.persistance.processor;
 
 import me.anisimov.agency.domain.Candidate;
 import me.anisimov.agency.persistance.resolver.CandidateSkillsResolver;
+import me.anisimov.agency.persistance.resolver.CandidateWorkExperienceResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +12,8 @@ import java.sql.SQLException;
 public class CandidateResultSetProcessor implements ResultSetProcessor<Candidate> {
     @Autowired
     CandidateSkillsResolver candidateSkillsResolver;
+    @Autowired
+    CandidateWorkExperienceResolver candidateWorkExperienceResolver;
     @Override
     public Candidate process(ResultSet resultSet) throws SQLException {
         Candidate candidate = new Candidate();
@@ -22,8 +25,8 @@ public class CandidateResultSetProcessor implements ResultSetProcessor<Candidate
         candidate.setRequiredExperience(resultSet.getByte("required_experience"));
         candidate.setDesiredSalary(resultSet.getInt("desired_salary"));
         candidate.setDesiredCareer(resultSet.getString("desired_career"));
-        candidate.setBasicDescription(resultSet.getString("basic_description"));
         candidate.setKeySkills(candidateSkillsResolver.resolve(candidate));
+        candidate.setWorkPlaces(candidateWorkExperienceResolver.resolve(candidate));
         return candidate;
     }
 }

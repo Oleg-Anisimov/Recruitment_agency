@@ -33,7 +33,7 @@ public class CandidateRepository implements CRUDRepository<Candidate> {
 
     @Override
     public void update(Candidate data) throws SQLException {
-        String sql = "Update candidate set name=?,surname=?,middlename=?,citizen_ship=?,required_experience=?,work_places=?,key_skills=?,desired_salary=?,basic_description=? where id=" + data.getId();
+        String sql = "Update candidate set name=?,surname=?,middlename=?,citizen_ship=?,required_experience=?,work_places=?,key_skills=?,desired_salary=? where id=" + data.getId();
         PreparedStatement preparedStatement = dao.getConnection().prepareStatement(sql);
         preparedStatement.setString(1, data.getName());
         preparedStatement.setString(2, data.getSurname());
@@ -44,7 +44,6 @@ public class CandidateRepository implements CRUDRepository<Candidate> {
         preparedStatement.setArray(7, (Array) data.getKeySkills());
         preparedStatement.setInt(8, data.getDesiredSalary());
         preparedStatement.setString(9, data.getDesiredCareer());
-        preparedStatement.setString(10, data.getBasicDescription());
         dao.execute(preparedStatement.toString(), (rs) -> {
             return null;
         });

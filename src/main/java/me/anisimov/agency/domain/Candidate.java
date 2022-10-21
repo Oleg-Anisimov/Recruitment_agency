@@ -31,16 +31,14 @@ public class Candidate extends BaseEntity {
     private String citizenShip;
     @Column(name = "required_experience")
     private Byte requiredExperience;
-    @Column(name = "work_places")
-    private List<String> workPlaces = new ArrayList<>();
+    @ManyToMany(intermediate = "work_experience", targetClass = WorkExperience.class)
+    private List<WorkExperience> workPlaces = new ArrayList<>();
     @ManyToMany(intermediate = "candidate_skills", targetClass = Skills.class)
     private List<Skills> keySkills = new ArrayList<>();
     @Column(name = "desired_salary")
     private Integer desiredSalary;
     @Column(name = "desired_career")
     private String desiredCareer;
-    @Column(name = "basic_description")
-    private String basicDescription;
 
     @Override
     public Map<String, Object> toMap() {
@@ -52,7 +50,6 @@ public class Candidate extends BaseEntity {
         candidateParams.put("required_experience", this.requiredExperience);
         candidateParams.put("desired_salary", this.desiredSalary);
         candidateParams.put("desired_career", this.desiredCareer);
-        candidateParams.put("basic_description", this.basicDescription);
         return candidateParams;
     }
 }

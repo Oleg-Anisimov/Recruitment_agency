@@ -63,12 +63,13 @@ public class AgencyApplication implements CommandLineRunner {
 //            return null;
 //        });
 //        log.info(s);;
-        vacancyRepository.create(new Vacancy(LocalDateTime.now(), LocalDateTime.now(), (byte) 8, 4300, "ikliioiol", "Developer", EmploymentType.FULL_TIME));
-        List vacancyExecute = vacancyRepository.getAll();
-        vacancyExecute.forEach(o -> {
-            log.info(((Vacancy) o).toString());
-        });
-
+//        vacancyRepository.create(new Vacancy(LocalDateTime.now(), LocalDateTime.now(), (byte) 8, 4300, "ikliioiol", "Developer", EmploymentType.FULL_TIME));
+//        List vacancyExecute = vacancyRepository.getAll();
+//        vacancyExecute.forEach(o -> {
+//            log.info(((Vacancy) o).toString());
+//        });
+        List all = candidateRepository.getAll();
+        all.forEach(o->{log.info(((Candidate) o).toString());});
 //        persistenceUtil.toMap(new Vacancy(8l,LocalDateTime.now(), LocalDateTime.now(), (byte) 3, 300, "ytryrtyrt", "javaDeveloper", EmploymentType.FULL_TIME));
 //       vacancyRepository.toMap(new Vacancy(LocalDateTime.now(), LocalDateTime.now(), (byte) 3, 300, "ytryrtyrt", "javaDeveloper", EmploymentType.FULL_TIME));
 
