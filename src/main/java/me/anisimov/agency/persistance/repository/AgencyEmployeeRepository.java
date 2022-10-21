@@ -32,8 +32,8 @@ public class AgencyEmployeeRepository implements CRUDRepository<AgencyEmployee> 
     }
 
     @Override
-    public void update( AgencyEmployee data) throws SQLException {
-        String sql = "Update employee set name=?,surname=?,middlename=?,citizen_ship=?,work_experience=?,birth_date=?,residence_place=?,phone_number=? where id="+data.getId();
+    public void update(AgencyEmployee data) throws SQLException {
+        String sql = "Update employee set name=?,surname=?,middlename=?,citizen_ship=?,work_experience=?,birth_date=?,residence_place=?,phone_number=? where id=" + data.getId();
         PreparedStatement preparedStatement = dao.getConnection().prepareStatement(sql);
         preparedStatement.setString(1, data.getName());
         preparedStatement.setString(2, data.getSurname());
@@ -89,7 +89,7 @@ public class AgencyEmployeeRepository implements CRUDRepository<AgencyEmployee> 
     @Override
     public List<AgencyEmployee> getAll() {
         String sql = "Select * from employee";
-        List<AgencyEmployee> agencyEmployees = dao.execute(sql,agencyEmployeeResultSetProcessor);
+        List<AgencyEmployee> agencyEmployees = dao.execute(sql, agencyEmployeeResultSetProcessor);
         return agencyEmployees;
     }
 

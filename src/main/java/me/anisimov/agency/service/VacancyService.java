@@ -14,7 +14,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class VacancyService {
     private final VacancyRepository vacancyRepository;
-    public List<Vacancy> getAll(){
+
+    public List<Vacancy> getAll() {
         return vacancyRepository.getAll();
     }
 }

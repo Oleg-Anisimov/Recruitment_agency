@@ -1,17 +1,13 @@
 package me.anisimov.agency.util;
 
+import me.anisimov.agency.domain.BaseEntity;
 import me.anisimov.agency.persistance.DAO;
-import me.anisimov.agency.util.annotation.Column;
 import me.anisimov.agency.util.annotation.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 
 @Component
@@ -19,55 +15,48 @@ public class PersistenceUtil {
     @Autowired
     DAO dao;
 
-    public <T> String buildSqlInsert(T object) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, SQLException {
-        Class<?> entityClass = object.getClass();
+    public <T extends BaseEntity> String buildSqlInsert(T entity) throws SQLException {
+        Class<?> entityClass = entity.getClass();
         if (!entityClass.isAnnotationPresent(Table.class)) {
             throw new RuntimeException("Provided object should be an entity");
         }
-        String sql = "Insert into ";
-        StringBuilder st = new StringBuilder(sql);
-        Map<String, Object> params = new HashMap<>();
-        int paramNumber = 1;
+        Map<String, Object> params;
+        params = entity.toMap();
+        String sql = sqlBlank(entityClass, params);
+        return sqlSubstitution(sql, params);
+    }
+
+    public String sqlBlank(Class<?> entityClass, Map<String, Object> params) {
         String prefix = "";
         String pr = "";
-        String columnName = "";
+        String sqlStart = "Insert into ";
+        String sqlEnd = ") Values (";
+        StringBuilder fullSql = new StringBuilder(sqlStart);
+        StringBuilder sqlQuestionMark = new StringBuilder(sqlEnd);
 
         Table tableAnnotation = entityClass.getAnnotation(Table.class);
         String tableName = tableAnnotation.name();
-        st.append(tableName).append("(");
+        fullSql.append(tableName).append("(");
 
-        Field[] fields = entityClass.getDeclaredFields();
-        for (int i = 0; i < fields.length; i++) {
-            Field field = fields[i];
-            if (field.isAnnotationPresent(Column.class)) {
-                Column annotation = field.getAnnotation(Column.class);
-                columnName = annotation.name();
-                String fieldName = field.getName();
-                String accessorMethodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-                Method method = entityClass.getDeclaredMethod(accessorMethodName);
-                Object invokeResult = method.invoke(object);
-                params.put(columnName, invokeResult);
-            }
-        }
         for (String paramName : params.keySet()) {
             Object paramValue = params.get(paramName);
             if (paramValue != null) {
-                st.append(prefix);
+                fullSql.append(prefix);
+                sqlQuestionMark.append(pr);
                 prefix = ",";
-                st.append(paramName);
-            }
-        }
-        st.append(") Values (");
-        for (String paramName : params.keySet()) {
-            Object paramValue = params.get(paramName);
-            if (paramValue != null) {
-                st.append(pr);
+                fullSql.append(paramName);
                 pr = ",";
-                st.append("?");
+                sqlQuestionMark.append("?");
             }
         }
-        st.append(");");
-        PreparedStatement ps = dao.getConnection().prepareStatement(String.valueOf(st));
+        sqlQuestionMark.append(");");
+        fullSql.append(sqlQuestionMark);
+        return fullSql.toString();
+    }
+
+    public String sqlSubstitution(String st, Map<String, Object> params) throws SQLException {
+        int paramNumber = 1;
+        PreparedStatement ps = dao.getConnection().prepareStatement(st);
         for (String paramName : params.keySet()) {
             Object paramValue = params.get(paramName);
             if (paramValue != null) {
@@ -85,5 +74,24 @@ public class PersistenceUtil {
         }
         return ps.toString();
     }
-
 }
+//    public Map<String,Object> toMap(Object data) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+//        Map<String, Object> params = new HashMap<>();
+//        Class<?> entityClass = data.getClass();
+//        Field[] fields = entityClass.getDeclaredFields();
+//        for (int i = 0; i < fields.length ; i++) {
+//            Field field = fields[i];
+//            if (field.isAnnotationPresent(Column.class)){
+//                Column annotation = field.getAnnotation(Column.class);
+//                String columnName = annotation.name();
+//                String fieldName = field.getName();
+//                String accessorMethodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+//                Method method = entityClass.getDeclaredMethod(accessorMethodName);
+//                Object invokeResult = method.invoke(data);
+//                params.put(columnName,invokeResult);
+//            }
+//        }
+//        return params;
+//    }
+
+

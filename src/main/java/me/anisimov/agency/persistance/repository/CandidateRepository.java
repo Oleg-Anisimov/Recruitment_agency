@@ -22,6 +22,7 @@ public class CandidateRepository implements CRUDRepository<Candidate> {
     private CandidateResultSetProcessor candidateResultSetProcessor;
     @Autowired
     PersistenceUtil persistenceUtil;
+
     @Override
     public void create(Candidate data) throws SQLException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         String sql = persistenceUtil.buildSqlInsert(data);
@@ -90,7 +91,7 @@ public class CandidateRepository implements CRUDRepository<Candidate> {
     @Override
     public List<Candidate> getAll() {
         String sql = "Select * from candidate";
-        List<Candidate> candidates = dao.execute(sql,candidateResultSetProcessor);
+        List<Candidate> candidates = dao.execute(sql, candidateResultSetProcessor);
         return candidates;
     }
 }

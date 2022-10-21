@@ -8,13 +8,15 @@ import me.anisimov.agency.util.annotation.Column;
 import me.anisimov.agency.util.annotation.Table;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 @Data
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "employee")
-public class AgencyEmployee {
+public class AgencyEmployee extends BaseEntity {
     @Column(name = "id")
     private Long id;
     @Column(name = "surname")
@@ -33,4 +35,19 @@ public class AgencyEmployee {
     private String residencePlace;
     @Column(name = "phone_number")
     private String phoneNumber;
+
+    @Override
+    public Map<String, Object> toMap() {
+        Map<String, Object> agencyEmployeeParams = new HashMap<>();
+        agencyEmployeeParams.put("id", this.id);
+        agencyEmployeeParams.put("surname", this.surname);
+        agencyEmployeeParams.put("name", this.name);
+        agencyEmployeeParams.put("middlename", this.middleName);
+        agencyEmployeeParams.put("citizen_ship", this.citizenShip);
+        agencyEmployeeParams.put("required_experience", this.requiredExperience);
+        agencyEmployeeParams.put("birth_date", this.birthDate);
+        agencyEmployeeParams.put("residence_place", this.residencePlace);
+        agencyEmployeeParams.put("phoneNumber", this.phoneNumber);
+        return agencyEmployeeParams;
+    }
 }

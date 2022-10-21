@@ -8,14 +8,16 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
+
 @Component
 public class CandidateSkillsResolver implements Resolver<Candidate, Skills> {
-   @Autowired
+    @Autowired
     DAO dao;
+
     @Override
     public List<Skills> resolve(Candidate candidate) {
-       String prefix="";
-       String sql = "Select * from candidate_skills where candidate_id="+ candidate.getId();
+        String prefix = "";
+        String sql = "Select * from candidate_skills where candidate_id=" + candidate.getId();
         List skills = dao.execute(sql, (rs) -> {
             return rs.getInt("candidate_id");
         });
@@ -25,7 +27,7 @@ public class CandidateSkillsResolver implements Resolver<Candidate, Skills> {
         StringBuilder stringBuilder = new StringBuilder(sql);
         for (int i = 0; i < skills.size(); i++) {
             stringBuilder.append(prefix);
-            prefix=",";
+            prefix = ",";
             stringBuilder.append(skills.get(i));
         }
         stringBuilder.append(");");

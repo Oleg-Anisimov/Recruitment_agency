@@ -1,20 +1,24 @@
 package me.anisimov.agency.persistance.repository;
 
+import me.anisimov.agency.domain.EmploymentType;
 import me.anisimov.agency.domain.Vacancy;
 import me.anisimov.agency.persistance.DAO;
-import me.anisimov.agency.persistance.processor.ResultSetProcessor;
 import me.anisimov.agency.persistance.processor.VacancyResultSetProcessor;
-import me.anisimov.agency.persistance.resolver.VacancySkillsResolver;
 import me.anisimov.agency.util.PersistenceUtil;
+import me.anisimov.agency.util.annotation.Column;
+import me.anisimov.agency.util.annotation.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 
 @Repository
@@ -37,10 +41,10 @@ public class VacancyRepository implements CRUDRepository<Vacancy> {
 
     @Override
     public void update(Vacancy data) throws SQLException {
-        String sql = "Update vacancy set salary=?,required_experience=?,description=?,position=?,employment_type=? where id="+data.getId();
+        String sql = "Update vacancy set salary=?,required_experience=?,description=?,position=?,employment_type=? where id=" + data.getId();
         PreparedStatement preparedStatement = dao.getConnection().prepareStatement(sql);
         preparedStatement.setInt(1, data.getSalary());
-        preparedStatement.setByte(2,data.getRequiredExperience());
+        preparedStatement.setByte(2, data.getRequiredExperience());
         preparedStatement.setString(3, data.getDescription());
         preparedStatement.setString(4, data.getPosition());
         preparedStatement.setString(8, String.valueOf(data.getEmploymentType()));
@@ -68,7 +72,7 @@ public class VacancyRepository implements CRUDRepository<Vacancy> {
     @Override
     public Vacancy getById(long id) {
         String sqlId = "Select * from vacancy where id=" + id;
-        Vacancy vacancy =(Vacancy) dao.execute(sqlId, vacancyResultSetProcessor).get(0);
+        Vacancy vacancy = (Vacancy) dao.execute(sqlId, vacancyResultSetProcessor).get(0);
         return vacancy;
     }
 
@@ -90,7 +94,7 @@ public class VacancyRepository implements CRUDRepository<Vacancy> {
     @Override
     public List<Vacancy> getAll() {
         String sql = "Select * from vacancy";
-        List<Vacancy> vacancies = dao.execute(sql,vacancyResultSetProcessor);
+        List<Vacancy> vacancies = dao.execute(sql, vacancyResultSetProcessor);
         return vacancies;
     }
 }

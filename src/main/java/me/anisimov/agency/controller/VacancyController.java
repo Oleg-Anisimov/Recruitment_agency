@@ -14,8 +14,9 @@ import java.util.List;
 public class VacancyController {
     @Autowired
     VacancyService vacancyService;
+
     @GetMapping
-    public List<Vacancy> getAll(){
-       return vacancyService.getAll();
+    public List<Vacancy> getAll() {
+        return vacancyService.getAll();
     }
 }

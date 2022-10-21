@@ -7,20 +7,34 @@ import lombok.ToString;
 import me.anisimov.agency.util.annotation.Column;
 import me.anisimov.agency.util.annotation.Table;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Data
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="users")
-public class User {
-    @Column(name="id")
+@Table(name = "users")
+public class User extends BaseEntity {
+    @Column(name = "id")
     private Long id;
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
-    @Column(name="phone")
+    @Column(name = "phone")
     private String phone;
-    @Column(name="password")
+    @Column(name = "password")
     private String password;
-    @Column(name="activated")
+    @Column(name = "activated")
     private Boolean activated;
+
+    @Override
+    public Map<String, Object> toMap() {
+        Map<String, Object> userParams = new HashMap<>();
+        userParams.put("id", this.id);
+        userParams.put("email", this.email);
+        userParams.put("phone", this.phone);
+        userParams.put("password", this.password);
+        userParams.put("activated", this.activated);
+        return userParams;
+    }
 }

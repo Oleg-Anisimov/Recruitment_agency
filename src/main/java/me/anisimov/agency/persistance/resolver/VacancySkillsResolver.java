@@ -13,16 +13,17 @@ import java.util.List;
 public class VacancySkillsResolver implements Resolver<Vacancy, Skills> {
     @Autowired
     private DAO dao;
+
     @Override
     public List<Skills> resolve(Vacancy vacancy) {
-        String prefix ="";
-        String sql = "Select * from vacancy_skills where vacancy_id="+ vacancy.getId();
+        String prefix = "";
+        String sql = "Select * from vacancy_skills where vacancy_id=" + vacancy.getId();
         List skills = dao.execute(sql, (rs) -> {
             return rs.getInt("skill_id");
         });
         if (skills.isEmpty())
             return Collections.EMPTY_LIST;
-         sql = "Select * from skills where id In (";
+        sql = "Select * from skills where id In (";
         StringBuilder stringBuilder = new StringBuilder(sql);
         for (int i = 0; i < skills.size(); i++) {
             stringBuilder.append(prefix);

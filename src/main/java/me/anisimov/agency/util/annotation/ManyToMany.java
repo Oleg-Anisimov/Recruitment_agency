@@ -9,6 +9,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ManyToMany {
     String intermediate();
+
     Class targetClass();
+
     String mappedBy() default "";
 }

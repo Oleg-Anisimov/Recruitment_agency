@@ -22,7 +22,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -41,6 +43,7 @@ public class AgencyApplication implements CommandLineRunner {
     PersistenceUtil persistenceUtil;
     @Autowired
     Optional<DataBaseInitializer> dataBaseInitializer;
+
     public static void main(String[] args) {
         SpringApplication.run(AgencyApplication.class, args);
     }
@@ -53,19 +56,27 @@ public class AgencyApplication implements CommandLineRunner {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-        } );
+        });
 
-//        String s = persistenceUtil.buildSqlInsert(new Vacancy(8l,LocalDateTime.now(), LocalDateTime.now(), (byte) 3, 300, "ytryrtyrt", "javaDeveloper", EmploymentType.FULL_TIME));
+//      String s = persistenceUtil.buildSqlInsert(new Vacancy(8l,LocalDateTime.now(), LocalDateTime.now(), (byte) 3, 300, "ytryrtyrt", "javaDeveloper", EmploymentType.FULL_TIME));
 //        dao.execute(s, (rs) -> {
 //            return null;
 //        });
-//        log.info(s);
-
-       vacancyRepository.create(new Vacancy(LocalDateTime.now(), LocalDateTime.now(), (byte) 3, 30000, "ytryrtyrt", "javaDeveloper", EmploymentType.FULL_TIME));
+//        log.info(s);;
+        vacancyRepository.create(new Vacancy(LocalDateTime.now(), LocalDateTime.now(), (byte) 8, 4300, "ikliioiol", "Developer", EmploymentType.FULL_TIME));
         List vacancyExecute = vacancyRepository.getAll();
         vacancyExecute.forEach(o -> {
             log.info(((Vacancy) o).toString());
         });
+
+//        persistenceUtil.toMap(new Vacancy(8l,LocalDateTime.now(), LocalDateTime.now(), (byte) 3, 300, "ytryrtyrt", "javaDeveloper", EmploymentType.FULL_TIME));
+//       vacancyRepository.toMap(new Vacancy(LocalDateTime.now(), LocalDateTime.now(), (byte) 3, 300, "ytryrtyrt", "javaDeveloper", EmploymentType.FULL_TIME));
+
+//       vacancyRepository.create(new Vacancy(LocalDateTime.now(), LocalDateTime.now(), (byte) 3, 30000, "ytryrtyrt", "javaDeveloper", EmploymentType.FULL_TIME));
+//        List vacancyExecute = vacancyRepository.getAll();
+//        vacancyExecute.forEach(o -> {
+//            log.info(((Vacancy) o).toString());
+//        });
 
 //        String s = persistenceUtil.convertToSql(new Vacancy());
 //        log.info(s);

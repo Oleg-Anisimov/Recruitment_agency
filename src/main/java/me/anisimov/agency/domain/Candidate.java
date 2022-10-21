@@ -9,35 +9,50 @@ import me.anisimov.agency.util.annotation.ManyToMany;
 import me.anisimov.agency.util.annotation.Table;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "candidate")
-public class Candidate {
-    @Column(name="id")
+public class Candidate extends BaseEntity {
+    @Column(name = "id")
     private Long id;
-    @Column(name="surname")
+    @Column(name = "surname")
     private String surname;
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
-    @Column(name="middlename")
+    @Column(name = "middlename")
     private String middleName;
-    @Column(name="citizen_ship")
+    @Column(name = "citizen_ship")
     private String citizenShip;
-    @Column(name="required_experience")
+    @Column(name = "required_experience")
     private Byte requiredExperience;
-    @Column(name="work_places")
+    @Column(name = "work_places")
     private List<String> workPlaces = new ArrayList<>();
-    @ManyToMany(intermediate = "candidate_skills",targetClass = Skills.class)
+    @ManyToMany(intermediate = "candidate_skills", targetClass = Skills.class)
     private List<Skills> keySkills = new ArrayList<>();
-    @Column(name="desired_salary")
+    @Column(name = "desired_salary")
     private Integer desiredSalary;
-    @Column(name="desired_career")
+    @Column(name = "desired_career")
     private String desiredCareer;
-    @Column(name="basic_description")
+    @Column(name = "basic_description")
     private String basicDescription;
 
+    @Override
+    public Map<String, Object> toMap() {
+        Map<String, Object> candidateParams = new HashMap<>();
+        candidateParams.put("id", this.id);
+        candidateParams.put("surname", this.surname);
+        candidateParams.put("middlename", this.middleName);
+        candidateParams.put("citizen_ship", this.middleName);
+        candidateParams.put("required_experience", this.requiredExperience);
+        candidateParams.put("desired_salary", this.desiredSalary);
+        candidateParams.put("desired_career", this.desiredCareer);
+        candidateParams.put("basic_description", this.basicDescription);
+        return candidateParams;
+    }
 }
