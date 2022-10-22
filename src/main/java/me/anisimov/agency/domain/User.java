@@ -16,8 +16,6 @@ import java.util.Map;
 @NoArgsConstructor
 @Table(name = "users")
 public class User extends BaseEntity {
-    @Column(name = "id")
-    private Long id;
     @Column(name = "email")
     private String email;
     @Column(name = "phone")
@@ -30,7 +28,7 @@ public class User extends BaseEntity {
     @Override
     public Map<String, Object> toMap() {
         Map<String, Object> userParams = new HashMap<>();
-        userParams.put("id", this.id);
+        userParams.put("id",this.id);
         userParams.put("email", this.email);
         userParams.put("phone", this.phone);
         userParams.put("password", this.password);

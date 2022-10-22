@@ -19,8 +19,6 @@ import java.util.Map;
 @NoArgsConstructor
 @Table(name = "candidate")
 public class Candidate extends BaseEntity {
-    @Column(name = "id")
-    private Long id;
     @Column(name = "surname")
     private String surname;
     @Column(name = "name")

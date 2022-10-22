@@ -17,8 +17,6 @@ import java.util.Map;
 @NoArgsConstructor
 @Table(name = "employee")
 public class AgencyEmployee extends BaseEntity {
-    @Column(name = "id")
-    private Long id;
     @Column(name = "surname")
     private String surname;
     @Column(name = "name")

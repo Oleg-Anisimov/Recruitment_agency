@@ -15,7 +15,7 @@ public class VacancyController {
     @Autowired
     VacancyService vacancyService;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Vacancy> getAll() {
         return vacancyService.getAll();
     }

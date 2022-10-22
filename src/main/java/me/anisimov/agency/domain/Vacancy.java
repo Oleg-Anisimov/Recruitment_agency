@@ -20,8 +20,6 @@ import java.util.Map;
 @NoArgsConstructor
 @Table(name = "vacancy")
 public class Vacancy extends BaseEntity {
-    @Column(name = "id")
-    private Long id;
     @Column(name = "created")
     private LocalDateTime created = LocalDateTime.now();
     @Column(name = "updated")
@@ -64,7 +62,6 @@ public class Vacancy extends BaseEntity {
     @Override
     public Map<String, Object> toMap() {
         Map<String, Object> vacancyParams = new HashMap<>();
-        vacancyParams.put("id", this.id);
         vacancyParams.put("created", this.created);
         vacancyParams.put("updated", this.updated);
         vacancyParams.put("salary", this.salary);

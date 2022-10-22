@@ -12,9 +12,10 @@ public class UserResultProcessor implements ResultSetProcessor<User> {
     @Override
     public User process(ResultSet resultSet) throws SQLException {
         User user =new User();
-        user.setId(resultSet.getLong("id"));
+        user.setId((long) resultSet.getInt("id"));
         user.setEmail(resultSet.getString("email"));
         user.setPassword(resultSet.getString("password"));
+        user.setPhone(resultSet.getString("phone"));
         user.setActivated(resultSet.getBoolean("activated"));
         return user;
     }

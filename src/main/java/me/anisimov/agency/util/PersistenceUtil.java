@@ -22,11 +22,43 @@ public class PersistenceUtil {
         }
         Map<String, Object> params;
         params = entity.toMap();
-        String sql = sqlBlank(entityClass, params);
+        String sql = sqlInsertBlank(entityClass, params);
+        return sqlSubstitution(sql, params);
+    }
+    public <T extends BaseEntity> String buildSqlUpdate(T entity) throws SQLException {
+        Class<?> entityClass = entity.getClass();
+        if (!entityClass.isAnnotationPresent(Table.class)) {
+            throw new RuntimeException("Provided object should be an entity");
+        }
+        Map<String, Object> params;
+        params = entity.toMap();
+        Long id = entity.getId();
+        String sql = sqlUpdateBlank(entityClass, params, id);
         return sqlSubstitution(sql, params);
     }
 
-    public String sqlBlank(Class<?> entityClass, Map<String, Object> params) {
+    public String sqlUpdateBlank(Class<?> entityClass, Map<String, Object> params,Long id) {
+        String sql ="Update ";
+        String prefix="";
+        StringBuilder fullSql =new StringBuilder(sql);
+
+        Table tableAnnotation = entityClass.getAnnotation(Table.class);
+        String tableName = tableAnnotation.name();
+        fullSql.append(tableName).append(" set ");
+
+        for(String paramName: params.keySet()){
+            Object paramValue = params.get(paramName);
+            if (paramValue != null) {
+                fullSql.append(prefix);
+                prefix = ",";
+                fullSql.append(paramName).append("=?");
+            }
+        }
+        fullSql.append(" where id=").append(id);
+        return fullSql.toString();
+    }
+
+    public String sqlInsertBlank(Class<?> entityClass, Map<String, Object> params) {
         String prefix = "";
         String pr = "";
         String sqlStart = "Insert into ";
@@ -54,9 +86,9 @@ public class PersistenceUtil {
         return fullSql.toString();
     }
 
-    public String sqlSubstitution(String st, Map<String, Object> params) throws SQLException {
+    public String sqlSubstitution(String sql, Map<String, Object> params) throws SQLException {
         int paramNumber = 1;
-        PreparedStatement ps = dao.getConnection().prepareStatement(st);
+        PreparedStatement ps = dao.getConnection().prepareStatement(sql);
         for (String paramName : params.keySet()) {
             Object paramValue = params.get(paramName);
             if (paramValue != null) {

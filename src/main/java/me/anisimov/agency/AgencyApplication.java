@@ -1,16 +1,14 @@
 package me.anisimov.agency;
 
 import lombok.extern.slf4j.Slf4j;
-import me.anisimov.agency.domain.AgencyEmployee;
-import me.anisimov.agency.domain.Candidate;
-import me.anisimov.agency.domain.EmploymentType;
-import me.anisimov.agency.domain.Vacancy;
+import me.anisimov.agency.domain.*;
 import me.anisimov.agency.persistance.DAO;
 import me.anisimov.agency.persistance.processor.AgencyEmployeeResultSetProcessor;
 import me.anisimov.agency.persistance.processor.CandidateResultSetProcessor;
 import me.anisimov.agency.persistance.processor.VacancyResultSetProcessor;
 import me.anisimov.agency.persistance.repository.AgencyEmployeeRepository;
 import me.anisimov.agency.persistance.repository.CandidateRepository;
+import me.anisimov.agency.persistance.repository.UserRepository;
 import me.anisimov.agency.persistance.repository.VacancyRepository;
 //import me.anisimov.agency.util.PersistenceUtil;
 import me.anisimov.agency.util.DataBaseInitializer;
@@ -19,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -42,7 +42,10 @@ public class AgencyApplication implements CommandLineRunner {
     @Autowired
     PersistenceUtil persistenceUtil;
     @Autowired
+    UserRepository userRepository;
+    @Autowired
     Optional<DataBaseInitializer> dataBaseInitializer;
+
 
     public static void main(String[] args) {
         SpringApplication.run(AgencyApplication.class, args);
@@ -68,8 +71,9 @@ public class AgencyApplication implements CommandLineRunner {
 //        vacancyExecute.forEach(o -> {
 //            log.info(((Vacancy) o).toString());
 //        });
-        List all = candidateRepository.getAll();
-        all.forEach(o->{log.info(((Candidate) o).toString());});
+//        List all = candidateRepository.getAll();
+//        all.forEach(o->{log.info(((Candidate) o).toString());});
+//        vacancyRepository.update(new Vacancy(LocalDateTime.now(), LocalDateTime.now(), (byte) 3, 30000, "ytryrtyrt", "javaDeveloper", EmploymentType.FULL_TIME));
 //        persistenceUtil.toMap(new Vacancy(8l,LocalDateTime.now(), LocalDateTime.now(), (byte) 3, 300, "ytryrtyrt", "javaDeveloper", EmploymentType.FULL_TIME));
 //       vacancyRepository.toMap(new Vacancy(LocalDateTime.now(), LocalDateTime.now(), (byte) 3, 300, "ytryrtyrt", "javaDeveloper", EmploymentType.FULL_TIME));
 
@@ -81,10 +85,15 @@ public class AgencyApplication implements CommandLineRunner {
 
 //        String s = persistenceUtil.convertToSql(new Vacancy());
 //        log.info(s);
-//        Vacancy vacancy = vacancyRepository.getById(4l);
+//        Vacancy vacancy = vacancyRepository.getById(333);
 //        vacancy.setSalary(200);
 //        vacancyRepository.update(vacancy);
-
+//     User user = new User("email@mail.ru","11111111111",passwordEncoder.encode("1234"),true);
+//     userRepository.create(user);
+//        List userExecute = userRepository.getAll();
+//        userExecute.forEach(o -> {
+//            log.info(((User) o).toString());
+//        });
 //        List candidateExecute = dao.execute("Select * from candidate", new CandidateResultSetProcessor());
 //        candidateExecute.forEach(o -> {
 //            log.info(((Candidate) o).toString());

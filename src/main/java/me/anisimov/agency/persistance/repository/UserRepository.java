@@ -33,7 +33,7 @@ public class UserRepository implements CRUDRepository<User> {
 
     @Override
     public void update(User data) throws SQLException {
-        String sql = "Update user set email=?,phone=?,password=?,activated=?";
+        String sql = "Update users set email=?,phone=?,password=?,activated=?";
         PreparedStatement preparedStatement = dao.getConnection().prepareStatement(sql);
         preparedStatement.setString(1, data.getEmail());
         preparedStatement.setString(2, data.getPhone());
@@ -43,7 +43,7 @@ public class UserRepository implements CRUDRepository<User> {
 
     @Override
     public void delete(long id) {
-        String sql = "Delete from user where id=" + id;
+        String sql = "Delete from users where id=" + id;
         dao.execute(sql, (rs) -> {
             return null;
         });
@@ -51,7 +51,7 @@ public class UserRepository implements CRUDRepository<User> {
 
     @Override
     public void delete(User data) {
-        String sql = "Delete from user where id=" + data.getId();
+        String sql = "Delete from users where id=" + data.getId();
         dao.execute(sql, (rs) -> {
             return null;
         });
@@ -59,7 +59,7 @@ public class UserRepository implements CRUDRepository<User> {
 
     @Override
     public User getById(long id) {
-        String sqlId = "Select from user where id=" + id;
+        String sqlId = "Select from users where id=" + id;
         User user = (User) dao.execute(sqlId, userResultProcessor);
         return user;
     }
@@ -67,7 +67,7 @@ public class UserRepository implements CRUDRepository<User> {
     @Override
     public List<User> getById(long... id) {
         String prefix = "";
-        String sql = "Select * from user where id in (";
+        String sql = "Select * from users where id in (";
         StringBuilder stringBuilder = new StringBuilder(sql);
         for (long userId : id) {
             stringBuilder.append(prefix);
@@ -81,12 +81,14 @@ public class UserRepository implements CRUDRepository<User> {
 
     @Override
     public List<User> getAll() {
-        String sql = "Select * from user";
+        String sql = "Select * from users";
         List<User> users = dao.execute(sql, userResultProcessor);
         return users;
     }
 
     public User findByPhoneOrEmail(String phoneOrEmail) {
+        String sql ="Select * from users where email="+phoneOrEmail+" or phone="+phoneOrEmail;
+        User user = (User) dao.execute(sql,userResultProcessor).get(0);
         return null;
     }
 

@@ -1,24 +1,16 @@
 package me.anisimov.agency.persistance.repository;
 
-import me.anisimov.agency.domain.EmploymentType;
 import me.anisimov.agency.domain.Vacancy;
 import me.anisimov.agency.persistance.DAO;
 import me.anisimov.agency.persistance.processor.VacancyResultSetProcessor;
 import me.anisimov.agency.util.PersistenceUtil;
-import me.anisimov.agency.util.annotation.Column;
-import me.anisimov.agency.util.annotation.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.sql.PreparedStatement;
+
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 
 @Repository
@@ -32,7 +24,7 @@ public class VacancyRepository implements CRUDRepository<Vacancy> {
     PersistenceUtil persistenceUtil;
 
     @Override
-    public void create(Vacancy data) throws SQLException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public void create(Vacancy data) throws SQLException {
         String sql = persistenceUtil.buildSqlInsert(data);
         dao.execute(sql, (rs) -> {
             return null;
@@ -41,14 +33,8 @@ public class VacancyRepository implements CRUDRepository<Vacancy> {
 
     @Override
     public void update(Vacancy data) throws SQLException {
-        String sql = "Update vacancy set salary=?,required_experience=?,description=?,position=?,employment_type=? where id=" + data.getId();
-        PreparedStatement preparedStatement = dao.getConnection().prepareStatement(sql);
-        preparedStatement.setInt(1, data.getSalary());
-        preparedStatement.setByte(2, data.getRequiredExperience());
-        preparedStatement.setString(3, data.getDescription());
-        preparedStatement.setString(4, data.getPosition());
-        preparedStatement.setString(8, String.valueOf(data.getEmploymentType()));
-        dao.execute(preparedStatement.toString(), (rs) -> {
+        String sql = persistenceUtil.buildSqlUpdate(data);
+        dao.execute(sql, (rs) -> {
             return null;
         });
     }

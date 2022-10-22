@@ -1,6 +1,7 @@
 package me.anisimov.agency.persistance.resolver;
 
 import me.anisimov.agency.domain.Candidate;
+import me.anisimov.agency.domain.Skills;
 import me.anisimov.agency.domain.WorkExperience;
 import me.anisimov.agency.persistance.DAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Component
-public class CandidateWorkExperienceResolver implements Resolver<Candidate, WorkExperience> {
+public class CandidateWorkPlaceAndBasicDescriptionResolver implements Resolver<Candidate, WorkExperience> {
     @Autowired
     DAO dao;
 
