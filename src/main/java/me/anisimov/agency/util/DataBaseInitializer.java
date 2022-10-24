@@ -23,9 +23,9 @@ import java.util.List;
 @Profile("dev")
 public class DataBaseInitializer {
     @Autowired
-    DAO dao;
+    private DAO dao;
     @Autowired
-    VacancyRepository vacancyRepository;
+    private VacancyRepository vacancyRepository;
 
     public void init() throws IOException, SQLException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
         log.info("************");

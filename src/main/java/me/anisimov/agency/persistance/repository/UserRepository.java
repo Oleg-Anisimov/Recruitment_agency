@@ -16,12 +16,12 @@ import java.util.List;
 public class UserRepository implements CRUDRepository<User> {
     String prefix = "";
     @Autowired
-    DAO dao;
+    private DAO dao;
     @Autowired
-    PersistenceUtil persistenceUtil;
+    private PersistenceUtil persistenceUtil;
 
     @Autowired
-    UserResultProcessor userResultProcessor;
+    private UserResultProcessor userResultProcessor;
 
     @Override
     public void create(User data) throws SQLException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {

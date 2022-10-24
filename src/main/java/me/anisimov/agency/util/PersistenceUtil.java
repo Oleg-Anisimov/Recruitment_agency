@@ -13,7 +13,7 @@ import java.util.Map;
 @Component
 public class PersistenceUtil {
     @Autowired
-    DAO dao;
+    private DAO dao;
 
     public <T extends BaseEntity> String buildSqlInsert(T entity) throws SQLException {
         Class<?> entityClass = entity.getClass();

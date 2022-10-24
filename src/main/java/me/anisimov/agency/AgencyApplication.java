@@ -32,19 +32,19 @@ import java.util.Optional;
 @Slf4j
 public class AgencyApplication implements CommandLineRunner {
     @Autowired
-    DAO dao;
+    private DAO dao;
     @Autowired
-    VacancyRepository vacancyRepository;
+    private VacancyRepository vacancyRepository;
     @Autowired
-    CandidateRepository candidateRepository;
+    private CandidateRepository candidateRepository;
     @Autowired
-    AgencyEmployeeRepository agencyEmployeeRepository;
+    private AgencyEmployeeRepository agencyEmployeeRepository;
     @Autowired
-    PersistenceUtil persistenceUtil;
+    private PersistenceUtil persistenceUtil;
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    Optional<DataBaseInitializer> dataBaseInitializer;
+    private Optional<DataBaseInitializer> dataBaseInitializer;
 
 
     public static void main(String[] args) {
@@ -88,7 +88,7 @@ public class AgencyApplication implements CommandLineRunner {
 //        Vacancy vacancy = vacancyRepository.getById(333);
 //        vacancy.setSalary(200);
 //        vacancyRepository.update(vacancy);
-//     User user = new User("email@mail.ru","11111111111",passwordEncoder.encode("1234"),true);
+//        User user = new User("email@mail.ru","11111111111",passwordEncoder.encode("1234"),true);
 //     userRepository.create(user);
 //        List userExecute = userRepository.getAll();
 //        userExecute.forEach(o -> {

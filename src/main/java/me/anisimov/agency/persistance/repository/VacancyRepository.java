@@ -21,7 +21,7 @@ public class VacancyRepository implements CRUDRepository<Vacancy> {
     @Autowired
     private VacancyResultSetProcessor vacancyResultSetProcessor;
     @Autowired
-    PersistenceUtil persistenceUtil;
+    private PersistenceUtil persistenceUtil;
 
     @Override
     public void create(Vacancy data) throws SQLException {

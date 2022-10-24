@@ -11,9 +11,9 @@ import java.sql.SQLException;
 @Component
 public class CandidateResultSetProcessor implements ResultSetProcessor<Candidate> {
     @Autowired
-    CandidateSkillsResolver candidateSkillsResolver;
+    private CandidateSkillsResolver candidateSkillsResolver;
     @Autowired
-    CandidateWorkPlaceAndBasicDescriptionResolver candidateWorkPlaceAndBasicDescriptionResolver;
+    private CandidateWorkPlaceAndBasicDescriptionResolver candidateWorkPlaceAndBasicDescriptionResolver;
     @Override
     public Candidate process(ResultSet resultSet) throws SQLException {
         Candidate candidate = new Candidate();
