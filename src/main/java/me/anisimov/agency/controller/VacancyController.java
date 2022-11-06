@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/vacancy")
 public class VacancyController {
     @Autowired
-    VacancyService vacancyService;
+    private VacancyService vacancyService;
 
     @GetMapping("/all")
     public List<Vacancy> getAll() {
