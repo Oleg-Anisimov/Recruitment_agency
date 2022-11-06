@@ -87,9 +87,9 @@ public class UserRepository implements CRUDRepository<User> {
     }
 
     public User findByPhoneOrEmail(String phoneOrEmail) {
-        String sql ="Select * from users where email="+phoneOrEmail+" or phone="+phoneOrEmail;
+        String sql ="Select * from users where email=\'"+phoneOrEmail+"\' or phone=\'"+phoneOrEmail+"\'";
         User user = (User) dao.execute(sql,userResultProcessor).get(0);
-        return null;
+        return user;
     }
 
 }
